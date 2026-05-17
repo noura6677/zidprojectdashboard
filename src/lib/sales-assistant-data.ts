@@ -90,7 +90,6 @@ export const roulettePrizes: RoulettePrize[] = [
   { id: "r3", label: "خصم 10%", weight: 30, color: "#9d65d2" },
   { id: "r4", label: "منتج إضافي", weight: 10, color: "#5a219b" },
   { id: "r5", label: "خصم 20%", weight: 8, color: "#bd97e2" },
-  { id: "r6", label: "حظ أوفر", weight: 12, color: "#451a78" },
 ];
 
 export const bubbleAiSuggestions = [

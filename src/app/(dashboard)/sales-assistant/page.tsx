@@ -52,6 +52,14 @@ const FEATURES: {
     accent: "from-brand-600 to-brand-400",
   },
   {
+    id: "bubble",
+    title: "الببل الذكية",
+    desc: "مساعد بيع تفاعلي يكتشف اهتمام العميل.",
+    icon: MessageSquareText,
+    status: "نشط · يعمل في المتجر",
+    accent: "from-brand-500 to-purple-400",
+  },
+  {
     id: "levels",
     title: "نظام المستويات",
     desc: "كافئ العملاء على تكرار الشراء عبر مستويات.",
@@ -64,24 +72,8 @@ const FEATURES: {
     title: "عجلة الحظ",
     desc: "جوائز، مكافأة معلّقة، ومؤقت داخل السلة.",
     icon: Disc3,
-    status: "نشط · 6 جوائز",
+    status: "نشط · 5 جوائز",
     accent: "from-indigo-600 to-brand-400",
-  },
-  {
-    id: "bubble",
-    title: "الببل الذكية",
-    desc: "مساعد بيع تفاعلي يكتشف اهتمام العميل.",
-    icon: MessageSquareText,
-    status: "نشط · يعمل في المتجر",
-    accent: "from-brand-500 to-purple-400",
-  },
-  {
-    id: "modes",
-    title: "أوضاع التشغيل",
-    desc: "ذكاء اصطناعي / يدوي / هجين للنظام كله.",
-    icon: SlidersHorizontal,
-    status: "الوضع العام",
-    accent: "from-brand-700 to-brand-500",
   },
   {
     id: "analytics",
@@ -90,6 +82,14 @@ const FEATURES: {
     icon: BarChart3,
     status: "محدّث الآن",
     accent: "from-fuchsia-600 to-brand-400",
+  },
+  {
+    id: "modes",
+    title: "أوضاع التشغيل",
+    desc: "ذكاء اصطناعي / يدوي / هجين للنظام كله.",
+    icon: SlidersHorizontal,
+    status: "الوضع العام",
+    accent: "from-brand-700 to-brand-500",
   },
 ];
 
@@ -120,7 +120,7 @@ export default function SalesAssistantPage() {
             تحكّم كامل في سلوكيات رفع متوسط السلة
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-white/80">
-            ستة أنظمة ذكية تعمل داخل متجر «نجدية» — كل نظام يدعم وضع الذكاء
+            خمسة أنظمة ذكية تعمل داخل متجر «نجدية» — كل نظام يدعم وضع الذكاء
             الاصطناعي، اليدوي، والهجين.
           </p>
           <div className="mt-4 flex items-center gap-2">
