@@ -426,9 +426,9 @@ export function RoulettePanel({ mode, setMode }: PanelProps) {
         <div className="space-y-3 rounded-2xl border border-gray-200 bg-white p-4">
           <p className="text-sm font-semibold text-ink">متى تظهر العجلة؟</p>
           {[
-            "بعد إضافة أول منتج للسلة (موصى به)",
+            "بعد إضافة أول منتج للسلة",
             "عند الدخول للمتجر",
-            "قبل إتمام الطلب",
+            "قبل إتمام الطلب (موصى به)",
           ].map((opt, i) => (
             <label
               key={opt}
@@ -437,7 +437,7 @@ export function RoulettePanel({ mode, setMode }: PanelProps) {
               <input
                 type="radio"
                 name="trigger"
-                defaultChecked={i === 0}
+                defaultChecked={i === 2}
                 className="accent-brand-600"
               />
               {opt}
