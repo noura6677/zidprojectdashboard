@@ -1,14 +1,26 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f9fafb;
-  --foreground: #111827;
+@theme {
+  --color-brand: #6e2eba;
+  --color-brand-50: #f5f0fb;
+  --color-brand-100: #ebe0f7;
+  --color-brand-200: #d8c2ef;
+  --color-brand-300: #bd97e2;
+  --color-brand-400: #9d65d2;
+  --color-brand-500: #823fc2;
+  --color-brand-600: #6e2eba;
+  --color-brand-700: #5a219b;
+  --color-brand-800: #451a78;
+  --color-brand-900: #2f1452;
+  --color-ink: #1a1430;
+  --color-muted: #6b6880;
+  --color-canvas: #f6f7fb;
+  --font-sans: var(--font-arabic);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+:root {
+  --background: #f6f7fb;
+  --foreground: #1a1430;
 }
 
 * {
@@ -18,4 +30,71 @@ body {
 html,
 body {
   height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-arabic), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-thumb {
+  background: #dad6e6;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c3bcd8;
+  background-clip: content-box;
+}
+
+@keyframes dm-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dm-slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes dm-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dm-fade {
+  animation: dm-fade-in 0.2s ease-out;
+}
+.dm-drawer {
+  animation: dm-slide-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dm-pop {
+  animation: dm-pop 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dm-card-hover {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.dm-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -18px rgba(110, 46, 186, 0.4);
 }

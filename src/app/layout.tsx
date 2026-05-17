@@ -1,33 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const arabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-arabic",
 });
 
 export const metadata: Metadata = {
-  title: "Deal Maker AI — Merchant Dashboard",
-  description: "Manage your deals, orders, and merchant settings.",
+  title: "Deal Maker AI — صانع الصفقات",
+  description:
+    "محرّك مبيعات ذكي يعمل داخل متجرك لرفع متوسط قيمة السلة وتحويل العميل إلى تجربة شراء متكاملة.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="ar" dir="rtl" className={`${arabic.variable} h-full`}>
+      <body className="min-h-full antialiased">{children}</body>
     </html>
   );
 }

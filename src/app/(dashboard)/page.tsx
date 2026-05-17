@@ -1,260 +1,149 @@
+import Link from "next/link";
 import {
+  Sparkles,
+  ArrowUpLeft,
   TrendingUp,
-  TrendingDown,
-  DollarSign,
-  Tag,
   ShoppingBag,
-  MousePointerClick,
+  Users,
+  Wallet,
+  CheckCircle2,
+  Layers,
+  Trophy,
+  Disc3,
 } from "lucide-react";
-import { Header } from "@/components/layout/header";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  kpiData,
-  revenueByMonth,
-  deals,
-  orders,
-} from "@/lib/mock-data";
-import { formatCurrency, formatDate, formatPercent } from "@/lib/utils";
 
-function KpiCard({
-  title,
-  value,
-  change,
-  icon: Icon,
-  prefix = "",
-  suffix = "",
-}: {
-  title: string;
-  value: number;
-  change: number;
-  icon: React.ElementType;
-  prefix?: string;
-  suffix?: string;
-}) {
-  const positive = change >= 0;
-  return (
-    <Card>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-500">{title}</p>
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-50">
-            <Icon className="h-4 w-4 text-indigo-600" />
-          </div>
-        </div>
-        <p className="mt-3 text-2xl font-bold text-gray-900">
-          {prefix}
-          {typeof value === "number" && title.toLowerCase().includes("revenue")
-            ? formatCurrency(value)
-            : `${value}${suffix}`}
-        </p>
-        <div className="mt-1 flex items-center gap-1">
-          {positive ? (
-            <TrendingUp className="h-3.5 w-3.5 text-green-500" />
-          ) : (
-            <TrendingDown className="h-3.5 w-3.5 text-red-500" />
-          )}
-          <span
-            className={`text-xs font-medium ${positive ? "text-green-600" : "text-red-600"}`}
-          >
-            {formatPercent(change)}
-          </span>
-          <span className="text-xs text-gray-400">vs last month</span>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
+const stats = [
+  { label: "متوسط قيمة السلة", value: "184 ﷼", change: "+31%", icon: TrendingUp },
+  { label: "طلبات اليوم", value: "47", change: "+12%", icon: ShoppingBag },
+  { label: "عملاء نشطون", value: "1,284", change: "+8%", icon: Users },
+  { label: "إيراد إضافي من الأدوات", value: "9,420 ﷼", change: "+24%", icon: Wallet },
+];
 
-function MiniBar({ value, max }: { value: number; max: number }) {
-  const pct = Math.round((value / max) * 100);
-  return (
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
-      <div
-        className="h-full rounded-full bg-indigo-500"
-        style={{ width: `${pct}%` }}
-      />
-    </div>
-  );
-}
+const onboarding = [
+  { title: "متجر «نجدية» متصل", desc: "واجهة العرض جاهزة وتعمل.", done: true },
+  { title: "فعّل الحزم الذكية", desc: "ارفع متوسط السلة تلقائيًا.", done: true },
+  { title: "اضبط أوضاع التشغيل", desc: "ذكاء اصطناعي / يدوي / هجين.", done: false },
+];
 
-const maxRevenue = Math.max(...revenueByMonth.map((m) => m.revenue));
-
-function dealStatusBadge(status: string) {
-  const map: Record<string, "success" | "warning" | "secondary" | "destructive"> = {
-    active: "success",
-    paused: "warning",
-    expired: "secondary",
-    draft: "outline" as "secondary",
-  };
-  return map[status] ?? "secondary";
-}
-
-function orderStatusBadge(status: string) {
-  const map: Record<string, "success" | "warning" | "secondary" | "destructive"> = {
-    completed: "success",
-    pending: "warning",
-    refunded: "secondary",
-    cancelled: "destructive",
-  };
-  return map[status] ?? "secondary";
-}
+const quick = [
+  { label: "الحزم الذكية", icon: Layers },
+  { label: "نظام المستويات", icon: Trophy },
+  { label: "عجلة الحظ", icon: Disc3 },
+];
 
 export default function OverviewPage() {
-  const topDeals = [...deals]
-    .filter((d) => d.status === "active")
-    .sort((a, b) => b.revenue - a.revenue)
-    .slice(0, 4);
-
-  const recentOrders = orders.slice(0, 5);
-
   return (
-    <>
-      <Header
-        title="Overview"
-        description="Your merchant performance at a glance"
-      />
-      <div className="p-6 space-y-6">
-        {/* KPI grid */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <KpiCard
-            title="Total Revenue"
-            value={kpiData.totalRevenue}
-            change={kpiData.revenueChange}
-            icon={DollarSign}
-          />
-          <KpiCard
-            title="Active Deals"
-            value={kpiData.activeDeals}
-            change={((kpiData.activeDealsChange / (kpiData.activeDeals - kpiData.activeDealsChange)) * 100)}
-            icon={Tag}
-            suffix=" deals"
-          />
-          <KpiCard
-            title="Total Orders"
-            value={kpiData.totalOrders}
-            change={kpiData.ordersChange}
-            icon={ShoppingBag}
-            suffix=" orders"
-          />
-          <KpiCard
-            title="Conversion Rate"
-            value={kpiData.conversionRate}
-            change={kpiData.conversionChange}
-            icon={MousePointerClick}
-            suffix="%"
-          />
+    <div className="space-y-6 p-6">
+      {/* بانر ترويجي */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-l from-brand-700 to-brand-500 px-7 py-7 text-white">
+        <div className="relative z-10 max-w-xl">
+          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
+            <Sparkles className="h-3.5 w-3.5" />
+            Deal Maker AI — محرّك المبيعات الذكي
+          </div>
+          <h1 className="text-2xl font-bold leading-snug">
+            حوّل كل عميل من شراء منتج واحد إلى تجربة شراء متكاملة
+          </h1>
+          <p className="mt-2 text-sm text-white/80">
+            أنظمة ذكية ترفع متوسط قيمة السلة داخل متجرك — حزم، مستويات، عجلة حظ،
+            وببل بيع تفاعلية.
+          </p>
+          <Link
+            href="/sales-assistant"
+            className="mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-brand-700 transition-transform hover:scale-[1.02]"
+          >
+            افتح مساعد البيع
+            <ArrowUpLeft className="h-4 w-4" />
+          </Link>
         </div>
-
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {/* Revenue chart (bar) */}
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle>Revenue Trend</CardTitle>
-              <CardDescription>Monthly revenue over the last 6 months</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex h-40 items-end gap-3">
-                {revenueByMonth.map((m) => {
-                  const pct = Math.round((m.revenue / maxRevenue) * 100);
-                  const isLatest = m.month === revenueByMonth[revenueByMonth.length - 1].month;
-                  return (
-                    <div key={m.month} className="group flex flex-1 flex-col items-center gap-1">
-                      <span className="invisible text-[10px] text-gray-500 group-hover:visible">
-                        {formatCurrency(m.revenue)}
-                      </span>
-                      <div
-                        className={`w-full rounded-t transition-all ${isLatest ? "bg-indigo-500" : "bg-indigo-200 group-hover:bg-indigo-300"}`}
-                        style={{ height: `${pct}%` }}
-                      />
-                      <span className="text-[11px] text-gray-400">{m.month}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Top active deals */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Top Active Deals</CardTitle>
-              <CardDescription>By revenue generated</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-4">
-                {topDeals.map((deal) => (
-                  <li key={deal.id} className="space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <p className="max-w-[160px] truncate text-sm font-medium text-gray-800">
-                        {deal.title}
-                      </p>
-                      <span className="text-sm font-semibold text-gray-900">
-                        {formatCurrency(deal.revenue)}
-                      </span>
-                    </div>
-                    <MiniBar value={deal.revenue} max={topDeals[0].revenue} />
-                    <p className="text-xs text-gray-400">
-                      {deal.redemptions} redemptions
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Recent orders */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Orders</CardTitle>
-            <CardDescription>Latest transactions across all deals</CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50 text-left">
-                    <th className="px-6 py-3 font-medium text-gray-500">Order</th>
-                    <th className="px-6 py-3 font-medium text-gray-500">Customer</th>
-                    <th className="px-6 py-3 font-medium text-gray-500">Deal</th>
-                    <th className="px-6 py-3 font-medium text-gray-500">Amount</th>
-                    <th className="px-6 py-3 font-medium text-gray-500">Date</th>
-                    <th className="px-6 py-3 font-medium text-gray-500">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {recentOrders.map((order) => (
-                    <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-3 font-mono text-xs text-gray-600">
-                        #{order.id}
-                      </td>
-                      <td className="px-6 py-3">
-                        <p className="font-medium text-gray-900">{order.customerName}</p>
-                        <p className="text-xs text-gray-400">{order.customerEmail}</p>
-                      </td>
-                      <td className="max-w-[200px] truncate px-6 py-3 text-gray-700">
-                        {order.dealTitle}
-                      </td>
-                      <td className="px-6 py-3 font-semibold text-gray-900">
-                        {formatCurrency(order.amount)}
-                      </td>
-                      <td className="px-6 py-3 text-gray-500">
-                        {formatDate(order.date)}
-                      </td>
-                      <td className="px-6 py-3">
-                        <Badge variant={orderStatusBadge(order.status)}>
-                          {order.status}
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+        <Sparkles className="absolute -left-6 -top-6 h-44 w-44 text-white/10" />
       </div>
-    </>
+
+      {/* إحصائيات */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {stats.map(({ label, value, change, icon: Icon }) => (
+          <div
+            key={label}
+            className="rounded-2xl border border-gray-100 bg-white p-5"
+          >
+            <div className="flex items-center justify-between">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                <Icon className="h-5 w-5" />
+              </span>
+              <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-600">
+                {change}
+              </span>
+            </div>
+            <p className="mt-4 text-2xl font-bold text-ink">{value}</p>
+            <p className="mt-0.5 text-sm text-muted">{label}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {/* خطوات التجهيز */}
+        <div className="rounded-2xl border border-gray-100 bg-white p-6 lg:col-span-2">
+          <h2 className="text-base font-bold text-ink">خطوات تجهيز متجرك</h2>
+          <p className="mt-1 text-sm text-muted">
+            أكمل الإعداد لتفعيل كامل قدرات رفع متوسط السلة.
+          </p>
+          <div className="mt-5 space-y-3">
+            {onboarding.map((step) => (
+              <div
+                key={step.title}
+                className="flex items-center gap-4 rounded-2xl border border-gray-100 bg-canvas px-4 py-3.5"
+              >
+                <CheckCircle2
+                  className={
+                    step.done
+                      ? "h-6 w-6 text-emerald-500"
+                      : "h-6 w-6 text-gray-300"
+                  }
+                />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-ink">{step.title}</p>
+                  <p className="text-xs text-muted">{step.desc}</p>
+                </div>
+                {step.done ? (
+                  <span className="text-xs font-semibold text-emerald-600">
+                    مكتمل
+                  </span>
+                ) : (
+                  <Link
+                    href="/sales-assistant"
+                    className="rounded-lg bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-700"
+                  >
+                    ابدأ
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* وصول سريع */}
+        <div className="rounded-2xl border border-gray-100 bg-white p-6">
+          <h2 className="text-base font-bold text-ink">وصول سريع</h2>
+          <p className="mt-1 text-sm text-muted">أنظمة مساعد البيع</p>
+          <div className="mt-5 space-y-2.5">
+            {quick.map(({ label, icon: Icon }) => (
+              <Link
+                key={label}
+                href="/sales-assistant"
+                className="flex items-center gap-3 rounded-xl border border-gray-100 px-4 py-3 transition-colors hover:border-brand-200 hover:bg-brand-50"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="flex-1 text-sm font-medium text-ink">
+                  {label}
+                </span>
+                <ArrowUpLeft className="h-4 w-4 text-gray-300" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
